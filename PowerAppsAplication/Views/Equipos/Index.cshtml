@@ -1,0 +1,120 @@
+﻿@model IEnumerable<PowerAppsAplication.Models.Equipos>
+@{
+    //Layout = "_LayoutDashboard";
+}
+<style>
+
+    /* Ajusta la columna "Nombre" de la tabla en caso de que contenga un registro con cadena extensa, evita que se rompa el diseño responsivo*/
+    .tdAjustado {
+        max-width: 100px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    /* Indica que se muestre la "mano" cuando el cursor pase sobre los elementos del tipo <a>*/
+    a {
+        cursor: pointer;
+    }
+
+    /* Estilo para hacer la tabla más compacta */
+    .table-sm th, .table-sm td {
+        padding: 0.2rem;
+        font-size: 0.7rem;
+    }
+
+    /* Ajuste de tamaño de las acciones */
+    .acciones {
+        width: 100px;
+    }
+
+</style>
+
+<div class="container">
+    <h1 class="mb-4">Vista de Equipos</h1>
+
+    <div class="row mb-3">
+        <div class="col-12 col-md-3">
+            <a asp-action="Crear" asp-controller="Equipos" class="btn btn-success btn-lg btn-block">
+                <i class="bi bi-plus"></i> Nuevo Equipo
+            </a>
+        </div>
+        <div class="col-12 col-md-9">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Buscar equipo..." aria-label="Buscar equipo" aria-describedby="button-addon2" id="searchInput">
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-sm" id="equiposTable">
+            <thead class="thead-dark">
+                <tr>
+                    <th class="text-center">Marca</th>
+                    <th class="text-center">Modelo</th>
+                    <th class="text-center">No. Serie</th>
+                    <th class="text-center">Descripción</th>
+                    <th class="text-center">Lugar Asignado</th>
+                    <th class="text-center">Responsable</th>
+                    <th class="text-center">Estado</th>
+                    <th class="text-center">Periodo de Calibración</th>
+                    <th class="text-center">Última Calibración</th>
+                    <th class="text-center">Próxima Calibración</th>
+                    <th class="text-center">Departamento</th>
+                    <th class="text-center acciones">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="align-middle">@item.Marca</td>
+                        <td class="align-middle">@item.Modelo</td>
+                        <td class="align-middle">@item.NoSerie</td>
+                        <td class="align-middle">@item.Descripcion</td>
+                        <td class="align-middle">@item.LugarAsignado</td>
+                        <td class="align-middle">@item.Responsable</td>
+                        <td class="align-middle">@item.Estado</td>
+                        <td class="align-middle">@item.PeriodoCalibracion</td>
+                        <td class="align-middle">@item.UltimaCalibracion.ToShortDateString()</td>
+                        <td class="align-middle">@item.ProximaCalibracion.ToShortDateString()</td>
+                        <td class="align-middle">@item.Departamento</td>
+                        <td class="align-middle acciones">
+                            <div class="btn-group" role="group" aria-label="Acciones">
+                                <a class="btn btn-warning btn-sm" href="#" role="button">
+                                    <i class="bi bi-journal"></i> Historial
+                                </a>
+                                <a class="btn btn-warning btn-sm" href="#" role="button">
+                                    <i class="bi bi-pencil"></i> Editar
+                                </a>
+                                <a class="btn btn-danger btn-sm" href="#" role="button">
+                                    <i class="bi bi-trash"></i> Eliminar
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        @if (Model.Count() == 0)
+        {
+            <div class="text-center">
+                <p>No hay registros</p>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#searchInput').on('keyup', function () {
+                var value = $(this).val().toLowerCase();
+                $('#equiposTable tbody tr').filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+}

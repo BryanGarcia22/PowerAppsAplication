@@ -1,0 +1,101 @@
+﻿@model PowerAppsAplication.Models.Equipos
+@{
+    //Layout = "_LayoutDashboard";
+    ViewData["Title"] = "Crear";
+    ViewData["Section"] = "Equipo";
+
+}
+
+    <div class="k-content__body	k-grid__item k-grid__item--fluid" id="k_content_body">
+
+
+    <h1 class="text-center">Formulario de Equipo</h1>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form asp-action="Crear" asp-controller="Equipos" method="post">
+                <div class="form-group row">
+                    <div class="col">
+                        <label asp-for="Marca" class="control-label">Marca:</label>
+                        <input asp-for="Marca" class="form-control" />
+                    </div>
+                    <div class="col">
+                        <label asp-for="NoSerie" class="control-label">Número de Serie:</label>
+                        <input asp-for="NoSerie" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Modelo" class="control-label">Modelo:</label>
+                    <input asp-for="Modelo" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Descripcion" class="control-label">Descripción:</label>
+                    <textarea asp-for="Descripcion" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="form-group row">
+                    <div class="col">
+                        <label asp-for="LugarAsignado" class="control-label">Lugar Asignado:</label>
+                        <input asp-for="LugarAsignado" class="form-control" />
+                    </div>
+                    <div class="col">
+                        <label asp-for="Responsable" class="control-label">Responsable:</label>
+                        <input asp-for="Responsable" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col">
+                        <label asp-for="Estado" class="control-label">Estado:</label>
+                        <input asp-for="Estado" class="form-control" />
+                    </div>
+                    <div class="col">
+                        <label asp-for="PeriodoCalibracion" class="control-label">Periodo de Calibración (meses):</label>
+                        <input asp-for="PeriodoCalibracion" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col">
+                        <label asp-for="UltimaCalibracion" class="control-label">Última Calibración:</label>
+                        <input asp-for="UltimaCalibracion" class="form-control" type="date" />
+                    </div>
+                    <div class="col">
+                        <label asp-for="ProximaCalibracion" class="control-label">Próxima Calibración:</label>
+                        <input asp-for="ProximaCalibracion" class="form-control" type="date" readonly />
+                    </div>
+                </div>
+                <div class="k-portlet__head-toolbar">
+                    <span class="d-inline-block" tabindex="0" data-toggle="k-tooltip" data-skin="dark" title="" data-original-title="Regresar">
+                        <a asp-controller="Equipos" asp-action="Index" class="btn btn-secondary k-margin-r-10" title="Regresar">
+                            <i class="la la-arrow-left"></i>
+                            <span class="k-hidden-mobile">Regresar</span>
+                        </a>
+                    </span>
+                    <div class="btn-group">
+                        <span class="d-inline-block" tabindex="0" data-toggle="k-tooltip" data-skin="dark" title="" data-original-title="Guardar @ViewData[" Section"]">
+                            <button type="submit" class="btn btn-primary" title="Guardar @ViewData[" Section"]">
+                                <i class="la la-check"></i>
+                                <span class="k-hidden-mobile">Guardar</span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@* Script para calcular la próxima calibración *@
+@section Scripts {
+    <script>
+        $(function () {
+            $('#UltimaCalibracion, #PeriodoCalibracion').change(function () {
+                var ultimaCalibracion = new Date($('#UltimaCalibracion').val());
+                var periodoCalibracion = parseInt($('#PeriodoCalibracion').val());
+                if (!isNaN(ultimaCalibracion.getTime()) && !isNaN(periodoCalibracion)) {
+                    var proximaCalibracion = new Date(ultimaCalibracion.getFullYear(), ultimaCalibracion.getMonth() + periodoCalibracion, ultimaCalibracion.getDate());
+                    var proximaCalibracionFormato = proximaCalibracion.toISOString().split('T')[0];
+                    $('#ProximaCalibracion').val(proximaCalibracionFormato);
+                }
+            });
+        });
+    </script>
+}
