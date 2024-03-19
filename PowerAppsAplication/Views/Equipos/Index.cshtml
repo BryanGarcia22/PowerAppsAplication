@@ -2,8 +2,8 @@
 @{
     //Layout = "_LayoutDashboard";
 }
-<style>
 
+<style>
     /* Ajusta la columna "Nombre" de la tabla en caso de que contenga un registro con cadena extensa, evita que se rompa el diseño responsivo*/
     .tdAjustado {
         max-width: 100px;
@@ -28,85 +28,163 @@
         width: 100px;
     }
 
+    /* Contenedor flotante blanco */
+    .floating-container {
+        background-color: white;
+        box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        border-radius: 10px;
+        position: relative;
+    }
+
+    /* Línea separadora */
+    .line-separator {
+        border-top: 1px solid #ccc;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+
+    /* Estilo para el input de búsqueda */
+    .search-input {
+        border-radius: 5px;
+    }
+
+    /* Estilo para los botones de exportación */
+    .btn-export {
+        border-radius: 5px;
+        padding: 8px 16px;
+        font-size: 14px;
+        margin-right: 10px;
+    }
+
+    /* Estilo para el botón "Nuevo Equipo" */
+    .btn-nuevo-equipo {
+        border-radius: 5px;
+        padding: 8px 16px;
+        font-size: 14px;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
 </style>
 
-<div class="container">
-    <h1 class="mb-4">Vista de Equipos</h1>
-
-    <div class="row mb-3">
-        <div class="col-12 col-md-3">
-            <a asp-action="Crear" asp-controller="Equipos" class="btn btn-success btn-lg btn-block">
-                <i class="bi bi-plus"></i> Nuevo Equipo
-            </a>
+@if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success fade show" role="alert">
+            <div class="alert-icon"><i class="flaticon-success"></i></div>
+            <div class="alert-text"><strong>¡Éxito!</strong> @TempData["Success"]</div>
+            <div class="alert-close">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true"><i class="la la-close"></i></span>
+                </button>
+            </div>
         </div>
-        <div class="col-12 col-md-9">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Buscar equipo..." aria-label="Buscar equipo" aria-describedby="button-addon2" id="searchInput">
+    }
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+			<div class="floating-container" style="Margin-bottom: 10px">
+                <h2 class="mb-4">Equipos</h2>
+                <a asp-action="Crear" asp-controller="Equipos" class="btn btn-success btn-nuevo-equipo">
+                    <i class="bi bi-plus"></i> Nuevo Equipo
+                </a>
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="floating-container">
 
-    <div class="table-responsive">
-        <table class="table table-bordered table-sm" id="equiposTable">
-            <thead class="thead-dark">
-                <tr>
-                    <th class="text-center">Marca</th>
-                    <th class="text-center">Modelo</th>
-                    <th class="text-center">No. Serie</th>
-                    <th class="text-center">Descripción</th>
-                    <th class="text-center">Lugar Asignado</th>
-                    <th class="text-center">Responsable</th>
-                    <th class="text-center">Estado</th>
-                    <th class="text-center">Periodo de Calibración</th>
-                    <th class="text-center">Última Calibración</th>
-                    <th class="text-center">Próxima Calibración</th>
-                    <th class="text-center">Departamento</th>
-                    <th class="text-center acciones">Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td class="align-middle">@item.Marca</td>
-                        <td class="align-middle">@item.Modelo</td>
-                        <td class="align-middle">@item.NoSerie</td>
-                        <td class="align-middle">@item.Descripcion</td>
-                        <td class="align-middle">@item.LugarAsignado</td>
-                        <td class="align-middle">@item.Responsable</td>
-                        <td class="align-middle">@item.Estado</td>
-                        <td class="align-middle">@item.PeriodoCalibracion</td>
-                        <td class="align-middle">@item.UltimaCalibracion.ToShortDateString()</td>
-                        <td class="align-middle">@item.ProximaCalibracion.ToShortDateString()</td>
-                        <td class="align-middle">@item.Departamento</td>
-                        <td class="align-middle acciones">
-                            <div class="btn-group" role="group" aria-label="Acciones">
-                                <a class="btn btn-warning btn-sm" href="#" role="button">
-                                    <i class="bi bi-journal"></i> Historial
-                                </a>
-                                <a class="btn btn-warning btn-sm" href="#" role="button">
-                                    <i class="bi bi-pencil"></i> Editar
-                                </a>
-                                <a class="btn btn-danger btn-sm" href="#" role="button">
-                                    <i class="bi bi-trash"></i> Eliminar
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+                <div class="row align-items-center">
+                    <div class="col-md-6 mb-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control search-input" placeholder="Buscar equipo..." aria-label="Buscar equipo" aria-describedby="button-addon2" id="searchInput">
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3 text-right">
+                        <button class="btn btn-primary btn-export" onclick="exportTableToPDF()">
+                            Exportar a PDF
+                        </button>
+                        <button class="btn btn-success btn-export" onclick="exportTableToExcel()">
+                            Exportar a Excel
+                        </button>
+                        <button class="btn btn-info btn-export" onclick="exportTableToXML()">
+                            Exportar a XML
+                        </button>
+                    </div>
+                </div>
 
-        @if (Model.Count() == 0)
-        {
-            <div class="text-center">
-                <p>No hay registros</p>
+                <div class="line-separator"></div>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-sm" id="equiposTable">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th class="text-center">Marca</th>
+                                <th class="text-center">Modelo</th>
+                                <th class="text-center">No. Serie</th>
+                                <th class="text-center">Descripción</th>
+                                <th class="text-center">Lugar Asignado</th>
+                                <th class="text-center">Responsable</th>
+                                <th class="text-center">Estado</th>
+                                <th class="text-center">Periodo de Calibración</th>
+                                <th class="text-center">Última Calibración</th>
+                                <th class="text-center">Próxima Calibración</th>
+                                <th class="text-center">Departamento</th>
+                                <th class="text-center acciones">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="align-middle">@item.Marca</td>
+                                    <td class="align-middle">@item.Modelo</td>
+                                    <td class="align-middle">@item.NoSerie</td>
+                                    <td class="align-middle">@item.Descripcion</td>
+                                    <td class="align-middle">@item.LugarAsignado</td>
+                                    <td class="align-middle">@item.Responsable</td>
+                                    <td class="align-middle">@item.Estado</td>
+                                    <td class="align-middle">@item.PeriodoCalibracion</td>
+                                    <td class="align-middle">@item.UltimaCalibracion.ToShortDateString()</td>
+                                    <td class="align-middle">@item.ProximaCalibracion.ToShortDateString()</td>
+                                    <td class="align-middle">@item.Departamento</td>
+                                    <td class="align-middle acciones">
+                                        <div class="btn-group" role="group" aria-label="Acciones">
+                                            <a class="btn btn-warning btn-sm"asp-action="Index" asp-controller="Historico" asp-route-id="@item.PkEquipo" role="button">
+                                                <i class="bi bi-journal"></i> Historial
+                                            </a>
+                                            <a class="btn btn-warning btn-sm" href="#" role="button">
+                                                <i class="bi bi-pencil"></i> Editar
+                                            </a>
+                                            <a class="btn btn-danger btn-sm" role="button" onclick="eliminar(@item.PkEquipo)">
+                                                <i class="bi bi-trash"></i> Eliminar
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    @if (Model.Count() == 0)
+                    {
+                        <div class="text-center">
+                            <p>No hay registros</p>
+                        </div>
+                    }
+                </div>
             </div>
-        }
+        </div>
     </div>
 </div>
 
 @section Scripts {
+    <!-- Incluir jQuery primero -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
         $(document).ready(function () {
             $('#searchInput').on('keyup', function () {
@@ -116,5 +194,58 @@
                 });
             });
         });
+                function eliminar(id) {
+        Swal.fire({
+            title: '¿Desea eliminar el registro?',
+            text: "Esta acción no se podrá revertir",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var form = $('#__AjaxAntiForgeryForm');
+                var token = $('input[name="__RequestVerificationToken"]', form).val();
+                $.ajax({
+                    url: '@Url.Action("Eliminar", "Equipos")',
+                    type: 'POST',
+                    data: {
+                        __RequestVerificationToken: token,
+                        id: id
+                    },
+                    success: function (data) {
+                        if (data.success) {
+                            Swal.fire({
+                                title: 'Eliminado',
+                                text: data.message,
+                                icon: 'success',
+                                timer: 2000,
+                                showConfirmButton: false
+                            }).then(function () {
+                                location.reload();
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Error',
+                                text: data.message,
+                                icon: 'error'
+                            });
+                        }
+                    },
+                    error: function () {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Ha ocurrido un error al eliminar el registro',
+                            icon: 'error'
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+
     </script>
 }

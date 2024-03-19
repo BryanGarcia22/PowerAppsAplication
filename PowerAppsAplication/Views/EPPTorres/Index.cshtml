@@ -1,0 +1,273 @@
+﻿@model IEnumerable<PowerAppsAplication.Models.EPPTorres>
+@{
+    //Layout = "_LayoutDashboard";
+}
+
+<style>
+    /* Ajusta la columna "NombreUsuario" de la tabla en caso de que contenga un registro con cadena extensa, evita que se rompa el diseño responsivo*/
+    .tdAjustado {
+        max-width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    /* Indica que se muestre la "mano" cuando el cursor pase sobre los elementos del tipo <a>*/
+    a {
+        cursor: pointer;
+    }
+
+    /* Estilo para hacer la tabla más compacta */
+    .table-sm th, .table-sm td {
+        padding: 0.2rem;
+        font-size: 0.7rem;
+    }
+
+    /* Ajuste de tamaño de las acciones */
+    .acciones {
+        width: 100px;
+    }
+
+    /* Contenedor flotante blanco */
+    .floating-container {
+        background-color: white;
+        box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        border-radius: 10px;
+        position: relative;
+    }
+
+    /* Línea separadora */
+    .line-separator {
+        border-top: 1px solid #ccc;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+
+    /* Estilo para el input de búsqueda */
+    .search-input {
+        border-radius: 5px;
+    }
+
+    /* Estilo para los botones de exportación */
+    .btn-export {
+        border-radius: 5px;
+        padding: 8px 16px;
+        font-size: 14px;
+        margin-right: 10px;
+    }
+
+    /* Estilo para el botón "Nuevo Equipo" */
+    .btn-nuevo-equipo {
+        border-radius: 5px;
+        padding: 8px 16px;
+        font-size: 14px;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+</style>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success fade show" role="alert">
+        <div class="alert-icon"><i class="flaticon-success"></i></div>
+        <div class="alert-text"><strong>¡Éxito!</strong> @TempData["Success"]</div>
+        <div class="alert-close">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true"><i class="la la-close"></i></span>
+            </button>
+        </div>
+    </div>
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="floating-container" style="Margin-bottom: 10px">
+                <h2 class="mb-4">EPPTorres</h2>
+                <!-- Puedes ajustar el enlace según la acción y controlador correspondiente -->
+                <a asp-action="Crear" asp-controller="EPPTorres" class="btn btn-success btn-nuevo-equipo">
+                    <i class="bi bi-plus"></i> Nuevo EPPTorres
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="floating-container">
+
+                <div class="row align-items-center">
+                    <div class="col-md-6 mb-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control search-input" placeholder="Buscar EPPTorres..." aria-label="Buscar EPPTorres" aria-describedby="button-addon2" id="searchInput">
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3 text-right">
+                        <button class="btn btn-primary btn-export" onclick="exportTableToPDF()">
+                            Exportar a PDF
+                        </button>
+                        <button class="btn btn-success btn-export" onclick="exportTableToExcel()">
+                            Exportar a Excel
+                        </button>
+                        <button class="btn btn-info btn-export" onclick="exportTableToXML()">
+                            Exportar a XML
+                        </button>
+                    </div>
+                </div>
+
+                <div class="line-separator"></div>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-sm" id="epptorresTable">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th class="text-center">Nombre Usuario</th>
+                                <th class="text-center">Jefe Directo</th>
+                                <th class="text-center">Gerencia</th>
+                                <th class="text-center">Ciudad</th>
+                                <th class="text-center">Arnes 5 Posiciones</th>
+                                <th class="text-center">Marca Arnes</th>
+                                <th class="text-center">Fecha Fabricación Arnes</th>
+                                <th class="text-center">Comentarios Status Arnes</th>
+                                <th class="text-center">Botas Seguridad</th>
+                                <th class="text-center">Cuerda Posicionamiento</th>
+                                <th class="text-center">Fecha Fabricación Cuerda</th>
+                                <th class="text-center">Guantes</th>
+                                <th class="text-center">Lentes Seguridad</th>
+                                <th class="text-center">Mosqueton</th>
+                                <th class="text-center">Shock Absorbente</th>
+                                <th class="text-center">Fecha Fabricación Shock</th>
+                                <th class="text-center">Sujetador Linea Vida</th>
+                                <th class="text-center">Casco Seguridad Barbiquejo</th>
+                                <th class="text-center">Comentario</th>
+                                <th class="text-center">Imagen1</th>
+                                <th class="text-center">Imagen2</th>
+                                <th class="text-center">Imagen Firma</th>
+                                <th class="text-center acciones">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="align-middle">@item.NombreUsuario</td>
+                                    <td class="align-middle">@item.JefeDirecto</td>
+                                    <td class="align-middle">@item.Gerencia</td>
+                                    <td class="align-middle">@item.Ciudad</td>
+                                    <td class="align-middle">@item.Arnes5Posiciones</td>
+                                    <td class="align-middle">@item.MarcaArnes</td>
+                                    <td class="align-middle">@item.FechaFabricacionArnes.ToShortDateString()</td>
+                                    <td class="align-middle">@item.ComentariosStatusArnes</td>
+                                    <td class="align-middle">@item.BotasSeguridad</td>
+                                    <td class="align-middle">@item.CuerdaPosicionamiento</td>
+                                    <td class="align-middle">@item.FechaFabricacionCuerda.ToShortDateString()</td>
+                                    <td class="align-middle">@item.Guantes</td>
+                                    <td class="align-middle">@item.LentesSeguridad</td>
+                                    <td class="align-middle">@item.Mosqueton</td>
+                                    <td class="align-middle">@item.ShockAbsorbente</td>
+                                    <td class="align-middle">@item.FechaFabricacionShock.ToShortDateString()</td>
+                                    <td class="align-middle">@item.SujetadorLineaVida</td>
+                                    <td class="align-middle">@item.CascoSeguridadBarbiquejo</td>
+                                    <td class="align-middle">@item.Comentario</td>
+                                    <td class="align-middle">@item.Imagen1</td>
+                                    <td class="align-middle">@item.Imagen2</td>
+                                    <td class="align-middle">@item.ImagenFirma</td>
+                                    <td class="align-middle acciones">
+                                        <div class="btn-group" role="group" aria-label="Acciones">
+                                            <!-- Aquí puedes ajustar los enlaces según las acciones y controladores correspondientes -->
+                                            <a class="btn btn-warning btn-sm" asp-action="Index" asp-controller="Historico" asp-route-id="@item.PkEPPTorres" role="button">
+                                                <i class="bi bi-journal"></i> Historial
+                                            </a>
+                                            <a class="btn btn-warning btn-sm" href="#" role="button">
+                                                <i class="bi bi-pencil"></i> Editar
+                                            </a>
+                                            <a class="btn btn-danger btn-sm" role="button" onclick="eliminar(@item.PkEPPTorres)">
+                                                <i class="bi bi-trash"></i> Eliminar
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    @if (Model.Count() == 0)
+                    {
+                        <div class="text-center">
+                            <p>No hay registros</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- Incluir jQuery primero -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#searchInput').on('keyup', function () {
+                var value = $(this).val().toLowerCase();
+                $('#epptorresTable tbody tr').filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+        function eliminar(id) {
+            Swal.fire({
+                title: '¿Desea eliminar el registro?',
+                text: "Esta acción no se podrá revertir",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var form = $('#__AjaxAntiForgeryForm');
+                    var token = $('input[name="__RequestVerificationToken"]', form).val();
+                    $.ajax({
+                        url: '@Url.Action("Eliminar", "EPPTorres")',
+                        type: 'POST',
+                        data: {
+                            __RequestVerificationToken: token,
+                            id: id
+                        },
+                        success: function (data) {
+                            if (data.success) {
+                                Swal.fire({
+                                    title: 'Eliminado',
+                                    text: data.message,
+                                    icon: 'success',
+                                    timer: 2000,
+                                    showConfirmButton: false
+                                }).then(function () {
+                                    location.reload();
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: data.message,
+                                    icon: 'error'
+                                });
+                            }
+                        },
+                        error: function () {
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Ha ocurrido un error al eliminar el registro',
+                                icon: 'error'
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+}

@@ -1,58 +1,99 @@
-﻿@{
+﻿@*@{
     ViewData["Title"] = "Home Page";
 }
+
+<style>
+    /* Estilo para las cards */
+    .card {
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .card-title {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .card-footer {
+        background-color: transparent;
+        border-top: none;
+    }
+
+    .btn-continuar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        border-radius: 0;
+    }
+
+    .btn-icon {
+        margin-right: 5px;
+    }
+</style>
 
 <div class="container mt-4">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="row">
-                <div class="col-6 d-flex flex-column">
-                    <div class="card flex-fill">
+                <div class="col-6">
+                    <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Equipo de Proteccion para Postes</h5>
                         </div>
-                        <div class="card-footer mt-auto">
-                            <a href="#" class="btn btn-success btn-block">
-                                <i class="bi bi-arrow-right-square"></i>
+                        <div class="card-footer">
+                            <a href="#" class="btn btn-success btn-block btn-continuar">
+                                <i class="bi bi-arrow-right-square btn-icon"></i>
                                 Continuar
                             </a>
                         </div>
                     </div>
                 </div>
-                <div class="col-6 d-flex flex-column">
-                    <div class="card flex-fill">
+                <div class="col-6">
+                    <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Equipos en SAP</h5>
                         </div>
-                        <div class="card-footer mt-auto">
-                            <a asp-action="Index" asp-controller="Equipos" class="btn btn-success btn-block">
-                                <i class="bi bi-arrow-right-square"></i>
+                        <div class="card-footer">
+                            <a asp-action="Index" asp-controller="Equipos" class="btn btn-success btn-block btn-continuar">
+                                <i class="bi bi-arrow-right-square btn-icon"></i>
                                 Continuar
                             </a>
                         </div>
                     </div>
                 </div>
-                <div class="col-6 mt-3 d-flex flex-column">
-                    <div class="card flex-fill">
+                <div class="col-6 mt-3">
+                    <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Card 3</h5>
                         </div>
-                        <div class="card-footer mt-auto">
-                            <a href="#" class="btn btn-success btn-block">
-                                <i class="bi bi-arrow-right-square"></i>
+                        <div class="card-footer">
+                            <a href="#" class="btn btn-success btn-block btn-continuar">
+                                <i class="bi bi-arrow-right-square btn-icon"></i>
                                 Continuar
                             </a>
                         </div>
                     </div>
                 </div>
-                <div class="col-6 mt-3 d-flex flex-column">
-                    <div class="card flex-fill">
+                <div class="col-6 mt-3">
+                    <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Card 4</h5>
                         </div>
-                        <div class="card-footer mt-auto">
-                            <a href="#" class="btn btn-success btn-block">
-                                <i class="bi bi-arrow-right-square"></i>
+                        <div class="card-footer">
+                            <a href="#" class="btn btn-success btn-block btn-continuar">
+                                <i class="bi bi-arrow-right-square btn-icon"></i>
                                 Continuar
                             </a>
                         </div>
@@ -60,6 +101,29 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
+*@
+@{
+    ViewData["Title"] = "Página de Inicio";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewData["Title"]</title>
+    <style>
+        /* Estilo para el título */
+        .bienvenidos {
+            text-align: center;
+            font-size: 36px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="bienvenidos">
+        <h1>Bienvenidos</h1>
+    </div>
+</body>
+</html>

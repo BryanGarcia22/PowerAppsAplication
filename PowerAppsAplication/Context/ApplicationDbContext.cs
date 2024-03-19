@@ -9,6 +9,7 @@ namespace PowerAppsAplication.Context
             : base(options){}
         public DbSet<Equipos> Equipos { get; set; }
         public DbSet<HistoricoEquipos> HistoricoEquipos { get; set; }
+        public DbSet<EPPTorres> EPPTorres { get; set; }
 
     }
 }

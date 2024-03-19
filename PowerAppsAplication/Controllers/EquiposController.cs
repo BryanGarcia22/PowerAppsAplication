@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using PowerAppsAplication.Context;
 using PowerAppsAplication.Models;
 using System.Text.RegularExpressions;
+using OfficeOpenXml;  
+using OfficeOpenXml.Table;
 
 namespace PowerAppsAplication.Controllers
 {
@@ -23,7 +25,7 @@ namespace PowerAppsAplication.Controllers
         }
         public ActionResult Details(int id)
         {
-            return View();
+            return View(id);
         }
 
 
@@ -112,36 +114,40 @@ namespace PowerAppsAplication.Controllers
         }
 
         [HttpGet]
-        public IActionResult Eliminar(int id)
-        {
-            try
-            {
-                var equipo = _context.Equipos.Find(id);
-                return View(equipo);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Surgio un error " + ex.Message);
-            }
+        //public IActionResult Eliminar(int id)
+        //{
+        //    try
+        //    {
+        //        var equipo = _context.Equipos.Find(id);
+        //        return View(equipo);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception("Surgio un error " + ex.Message);
+        //    }
 
-        }
+        //}
         [HttpPost]
-        public async Task<IActionResult> Eliminar(int id, Equipos requestEquipo)
+        public async Task<IActionResult> Eliminar(int id)
         {
             try
             {
-                Equipos equipo = new();
-                equipo = _context.Equipos.Find(id);
+                Equipos equipo = await _context.Equipos.FindAsync(id);
+                if (equipo == null)
+                {
+                    return Json(new { success = false, message = "El equipo no fue encontrado." });
+                }
+
                 _context.Equipos.Remove(equipo);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                return Json(new { success = true, message = "El equipo ha sido eliminado exitosamente." });
             }
             catch (Exception ex)
             {
-
-                throw new Exception("Surgio un error " + ex.Message);
+                return Json(new { success = false, message = "Ocurrió un error al intentar eliminar el equipo: " + ex.Message });
             }
-
         }
+
     }
 }

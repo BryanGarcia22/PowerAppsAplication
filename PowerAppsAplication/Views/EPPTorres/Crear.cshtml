@@ -1,0 +1,237 @@
+﻿@model PowerAppsAplication.Models.EPPTorres
+@{
+    //Layout = "_LayoutDashboard";
+    ViewData["Title"] = "Crear";
+    ViewData["Section"] = "EPPTorres";
+}
+
+<style>
+    /* Estilo para el contenedor flotante */
+    .floating-container {
+        background-color: white;
+        box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        width: 100%;
+        border-radius: 10px;
+        position: relative;
+    }
+
+    /* Estilo para el botón "Regresar" */
+    .btn-regresar {
+        margin-right: 10px;
+    }
+
+    /* Estilo para el botón "Guardar" */
+    .btn-guardar {
+        margin-right: 10px;
+    }
+
+    /* Estilo para el formulario */
+    .form-control {
+        margin-bottom: 10px;
+    }
+
+    /* Estilo para el título */
+    .titulo {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    /* Estilo para los campos de tipo select */
+    .select-control {
+        width: 100%;
+    }
+</style>
+
+<div class="container">
+    <h1 class="titulo">Formulario de EPPTorres</h1>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="floating-container">
+                <form asp-action="Crear" asp-controller="EPPTorres" method="post">
+                    <div class="form-group row">
+                        <div class="col">
+                            <label asp-for="NombreUsuario" class="control-label">Nombre de Usuario:</label>
+                            <input asp-for="NombreUsuario" class="form-control" />
+                        </div>
+                        <div class="col">
+                            <label asp-for="JefeDirecto" class="control-label">Jefe Directo:</label>
+                            <input asp-for="JefeDirecto" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label asp-for="Gerencia" class="control-label">Gerencia:</label>
+                            <input asp-for="Gerencia" class="form-control" />
+                        </div>
+                        <div class="col">
+                            <label asp-for="Ciudad" class="control-label">Ciudad:</label>
+                            <input asp-for="Ciudad" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label asp-for="Arnes5Posiciones" class="control-label">Arnes 5 Posiciones:</label>
+                            <select asp-for="Arnes5Posiciones" class="form-control select-control">
+                                <option value="Si">Si</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label asp-for="MarcaArnes" class="control-label">Marca Arnes:</label>
+                            <input asp-for="MarcaArnes" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label asp-for="FechaFabricacionArnes" class="control-label">Fecha Fabricación Arnes:</label>
+                            <input asp-for="FechaFabricacionArnes" class="form-control" type="date" />
+                        </div>
+                        <div class="col">
+                            <label asp-for="ComentariosStatusArnes" class="control-label">Comentarios Status Arnes:</label>
+                            <input asp-for="ComentariosStatusArnes" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label asp-for="BotasSeguridad" class="control-label">Botas Seguridad:</label>
+                            <select asp-for="BotasSeguridad" class="form-control select-control">
+                                <option value="Si">Si</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label asp-for="Guantes" class="control-label">Guantes:</label>
+                            <select asp-for="Guantes" class="form-control select-control">
+                                <option value="Si">Si</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label asp-for="CuerdaPosicionamiento" class="control-label">Cuerda Posicionamiento:</label>
+                            <select asp-for="CuerdaPosicionamiento" class="form-control select-control">
+                                <option value="Si">Si</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label asp-for="FechaFabricacionCuerda" class="control-label">Fecha Fabricación Cuerda:</label>
+                            <input asp-for="FechaFabricacionCuerda" class="form-control" type="date" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label asp-for="LentesSeguridad" class="control-label">Lentes Seguridad:</label>
+                            <select asp-for="LentesSeguridad" class="form-control select-control">
+                                <option value="Si">Si</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label asp-for="Mosqueton" class="control-label">Mosqueton:</label>
+                            <select asp-for="Mosqueton" class="form-control select-control">
+                                <option value="Si">Si</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label asp-for="ShockAbsorbente" class="control-label">Shock Absorbente:</label>
+                            <select asp-for="ShockAbsorbente" class="form-control select-control">
+                                <option value="Si">Si</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label asp-for="FechaFabricacionShock" class="control-label">Fecha Fabricación Shock:</label>
+                            <input asp-for="FechaFabricacionShock" class="form-control" type="date" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label asp-for="SujetadorLineaVida" class="control-label">Sujetador Linea de Vida:</label>
+                            <select asp-for="SujetadorLineaVida" class="form-control select-control">
+                                <option value="Si">Si</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label asp-for="CascoSeguridadBarbiquejo" class="control-label">Casco Seguridad con Barbiquejo:</label>
+                            <select asp-for="CascoSeguridadBarbiquejo" class="form-control select-control">
+                                <option value="Si">Si</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Comentario" class="control-label">Comentarios:</label>
+                        <textarea asp-for="Comentario" class="form-control" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Imagen1" class="control-label">Imagen 1:</label>
+                        <input asp-for="Imagen1" class="form-control" type="file" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Imagen2" class="control-label">Imagen 2:</label>
+                        <input asp-for="Imagen2" class="form-control" type="file" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ImagenFirma" class="control-label">Imagen Firma:</label>
+                        <input asp-for="ImagenFirma" class="form-control" type="file" />
+                    </div>
+                    <div class="row justify-content-between">
+                        <div>
+                            <button type="submit" class="btn btn-primary btn-guardar">
+                                <i class="la la-check"></i> Guardar
+                            </button>
+                            <a asp-controller="EPPTorres" asp-action="Index" class="btn btn-secondary btn-regresar">
+                                <i class="la la-arrow-left"></i> Regresar
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            $('#FechaFabricacionArnes').change(function () {
+                var fechaArnes = new Date($('#FechaFabricacionArnes').val());
+                if (!isNaN(fechaArnes.getTime())) {
+                    var fechaCuerda = new Date(fechaArnes.getFullYear() + 1, fechaArnes.getMonth(), fechaArnes.getDate());
+                    var fechaCuerdaFormato = fechaCuerda.toISOString().split('T')[0];
+                    $('#FechaFabricacionCuerda').val(fechaCuerdaFormato);
+                }
+            });
+
+            $('#Arnes5Posiciones').change(function () {
+                var arnesPosiciones = $('#Arnes5Posiciones').val();
+                if (arnesPosiciones === 'False') {
+                    $('#MarcaArnes').prop('disabled', true);
+                    $('#FechaFabricacionArnes').prop('disabled', true);
+                    $('#ComentariosStatusArnes').prop('disabled', true);
+                } else {
+                    $('#MarcaArnes').prop('disabled', false);
+                    $('#FechaFabricacionArnes').prop('disabled', false);
+                    $('#ComentariosStatusArnes').prop('disabled', false);
+                }
+            });
+
+            $('#ShockAbsorbente').change(function () {
+                var shockAbsorbente = $('#ShockAbsorbente').val();
+                if (shockAbsorbente === 'No') {
+                    $('#FechaFabricacionShock').prop('disabled', true);
+                } else {
+                    $('#FechaFabricacionShock').prop('disabled', false);
+                }
+            });
+        });
+    </script>
+}

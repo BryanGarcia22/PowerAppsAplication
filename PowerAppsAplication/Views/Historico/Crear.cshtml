@@ -1,0 +1,95 @@
+﻿@model PowerAppsAplication.Models.HistoricoEquipos
+@{
+    ViewData["Title"] = "Crear";
+    ViewData["Section"] = "HistoricoEquipos";
+}
+
+<style>
+    /* Estilo para el contenedor flotante */
+    .floating-container {
+        background-color: white;
+        box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        width: 100%;
+        border-radius: 10px;
+        position: relative;
+    }
+
+    /* Estilo para el botón "Regresar" */
+    .btn-regresar {
+        margin-right: 10px;
+    }
+
+    /* Estilo para el botón "Guardar" */
+    .btn-guardar {
+        margin-right: 10px;
+    }
+
+    /* Estilo para el formulario */
+    .form-control {
+        margin-bottom: 10px;
+    }
+
+    /* Estilo para el título */
+    .titulo {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+</style>
+
+<div class="container">
+    <h1 class="titulo">Datos del mantenimiento</h1>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="floating-container">
+                <form asp-action="Crear" asp-controller="Historico" method="post">
+                        <input asp-for="FkEquipo" type="hidden" class="form-control" value="@ViewBag.Id";
+/>
+                    <div class="form-group">
+                        <label asp-for="FechaMantenimiento" class="control-label">Fecha de Mantenimiento:</label>
+                        <input asp-for="FechaMantenimiento" class="form-control" type="date" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Motivo" class="control-label">Motivo:</label>
+                        <input asp-for="Motivo" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Calibracion" class="control-label">Calibración:</label>
+                        <input asp-for="Calibracion" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Reparacion" class="control-label">Reparación:</label>
+                        <input asp-for="Reparacion" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="FechaReparacion" class="control-label">Fecha de Reparación:</label>
+                        <input asp-for="FechaReparacion" class="form-control" type="date" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MontoGastado" class="control-label">Monto Gastado:</label>
+                        <input asp-for="MontoGastado" class="form-control" />
+                    </div>
+                    <div class="row justify-content-between">
+                        <div>
+                            <button type="submit" class="btn btn-primary btn-guardar">
+                                <i class="la la-check"></i> Guardar
+                            </button>
+                            <a asp-controller="Historico" asp-action="Index" class="btn btn-secondary btn-regresar">
+                                <i class="la la-arrow-left"></i> Regresar
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            // Puedes agregar aquí cualquier script adicional necesario para esta vista
+        });
+    </script>
+}

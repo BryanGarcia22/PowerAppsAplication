@@ -3,87 +3,116 @@
     //Layout = "_LayoutDashboard";
     ViewData["Title"] = "Crear";
     ViewData["Section"] = "Equipo";
-
 }
 
-    <div class="k-content__body	k-grid__item k-grid__item--fluid" id="k_content_body">
+<style>
+    /* Estilo para el contenedor flotante */
+    .floating-container {
+        background-color: white;
+        box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        width: 100%;
+        border-radius: 10px;
+        position: relative;
+    }
 
+    /* Estilo para el botón "Regresar" */
+    .btn-regresar {
+        margin-right: 10px;
+    }
 
-    <h1 class="text-center">Formulario de Equipo</h1>
+    /* Estilo para el botón "Guardar" */
+    .btn-guardar {
+        margin-right: 10px;
+    }
+
+    /* Estilo para el formulario */
+    .form-control {
+        margin-bottom: 10px;
+    }
+
+    /* Estilo para el título */
+    .titulo {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+</style>
+
+<div class="container">
+    <h1 class="titulo">Formulario de Equipo</h1>
 
     <div class="row justify-content-center">
-        <div class="col-md-6">
-            <form asp-action="Crear" asp-controller="Equipos" method="post">
-                <div class="form-group row">
-                    <div class="col">
-                        <label asp-for="Marca" class="control-label">Marca:</label>
-                        <input asp-for="Marca" class="form-control" />
+        <div class="col-md-8">
+            <div class="floating-container">
+                <form asp-action="Crear" asp-controller="Equipos" method="post">
+                    <div class="form-group row">
+                        <div class="col">
+                            <label asp-for="Marca" class="control-label">Marca:</label>
+                            <input asp-for="Marca" class="form-control" />
+                        </div>
+                        <div class="col">
+                            <label asp-for="NoSerie" class="control-label">Número de Serie:</label>
+                            <input asp-for="NoSerie" class="form-control" />
+                        </div>
                     </div>
-                    <div class="col">
-                        <label asp-for="NoSerie" class="control-label">Número de Serie:</label>
-                        <input asp-for="NoSerie" class="form-control" />
+                    <div class="form-group">
+                        <label asp-for="Modelo" class="control-label">Modelo:</label>
+                        <input asp-for="Modelo" class="form-control" />
                     </div>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Modelo" class="control-label">Modelo:</label>
-                    <input asp-for="Modelo" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label asp-for="Descripcion" class="control-label">Descripción:</label>
-                    <textarea asp-for="Descripcion" class="form-control" rows="3"></textarea>
-                </div>
-                <div class="form-group row">
-                    <div class="col">
-                        <label asp-for="LugarAsignado" class="control-label">Lugar Asignado:</label>
-                        <input asp-for="LugarAsignado" class="form-control" />
+                    <div class="form-group">
+                        <label asp-for="Descripcion" class="control-label">Descripción:</label>
+                        <textarea asp-for="Descripcion" class="form-control" rows="3"></textarea>
                     </div>
-                    <div class="col">
-                        <label asp-for="Responsable" class="control-label">Responsable:</label>
-                        <input asp-for="Responsable" class="form-control" />
+                    <div class="form-group row">
+                        <div class="col">
+                            <label asp-for="LugarAsignado" class="control-label">Lugar Asignado:</label>
+                            <input asp-for="LugarAsignado" class="form-control" />
+                        </div>
+                        <div class="col">
+                            <label asp-for="Responsable" class="control-label">Responsable:</label>
+                            <input asp-for="Responsable" class="form-control" />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col">
-                        <label asp-for="Estado" class="control-label">Estado:</label>
-                        <input asp-for="Estado" class="form-control" />
+                    <div class="form-group row">
+                        <div class="col">
+                            <label asp-for="Estado" class="control-label">Estado:</label>
+                            <input asp-for="Estado" class="form-control" />
+                        </div>
+                        <div class="col">
+                            <label asp-for="PeriodoCalibracion" class="control-label">Periodo de Calibración (meses):</label>
+                            <input asp-for="PeriodoCalibracion" class="form-control" />
+                        </div>
                     </div>
-                    <div class="col">
-                        <label asp-for="PeriodoCalibracion" class="control-label">Periodo de Calibración (meses):</label>
-                        <input asp-for="PeriodoCalibracion" class="form-control" />
+                    <div class="form-group row">
+                        <div class="col">
+                            <label asp-for="UltimaCalibracion" class="control-label">Última Calibración:</label>
+                            <input asp-for="UltimaCalibracion" class="form-control" type="date" />
+                        </div>
+                        <div class="col">
+                            <label asp-for="ProximaCalibracion" class="control-label">Próxima Calibración:</label>
+                            <input asp-for="ProximaCalibracion" class="form-control" type="date" readonly />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col">
-                        <label asp-for="UltimaCalibracion" class="control-label">Última Calibración:</label>
-                        <input asp-for="UltimaCalibracion" class="form-control" type="date" />
+                    <div class="form-group">
+                        <label asp-for="Departamento" class="control-label">Departamento:</label>
+                        <input asp-for="Departamento" class="form-control" />
                     </div>
-                    <div class="col">
-                        <label asp-for="ProximaCalibracion" class="control-label">Próxima Calibración:</label>
-                        <input asp-for="ProximaCalibracion" class="form-control" type="date" readonly />
-                    </div>
-                </div>
-                <div class="k-portlet__head-toolbar">
-                    <span class="d-inline-block" tabindex="0" data-toggle="k-tooltip" data-skin="dark" title="" data-original-title="Regresar">
-                        <a asp-controller="Equipos" asp-action="Index" class="btn btn-secondary k-margin-r-10" title="Regresar">
-                            <i class="la la-arrow-left"></i>
-                            <span class="k-hidden-mobile">Regresar</span>
-                        </a>
-                    </span>
-                    <div class="btn-group">
-                        <span class="d-inline-block" tabindex="0" data-toggle="k-tooltip" data-skin="dark" title="" data-original-title="Guardar @ViewData[" Section"]">
-                            <button type="submit" class="btn btn-primary" title="Guardar @ViewData[" Section"]">
-                                <i class="la la-check"></i>
-                                <span class="k-hidden-mobile">Guardar</span>
+                    <div class="row justify-content-between">
+                        <div>
+                            <button type="submit" class="btn btn-primary btn-guardar">
+                                <i class="la la-check"></i> Guardar
                             </button>
-                        </span>
+                            <a asp-controller="Equipos" asp-action="Index" class="btn btn-secondary btn-regresar">
+                                <i class="la la-arrow-left"></i> Regresar
+                            </a>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 </div>
 
-@* Script para calcular la próxima calibración *@
 @section Scripts {
     <script>
         $(function () {

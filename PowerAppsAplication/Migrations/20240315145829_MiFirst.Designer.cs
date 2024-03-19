@@ -12,8 +12,8 @@ using PowerAppsAplication.Context;
 namespace PowerAppsAplication.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240311153405_firstM")]
-    partial class firstM
+    [Migration("20240315145829_MiFirst")]
+    partial class MiFirst
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,85 @@ namespace PowerAppsAplication.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("PowerAppsAplication.Models.EPPTorres", b =>
+                {
+                    b.Property<int>("PkEPPTorres")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PkEPPTorres"), 1L, 1);
+
+                    b.Property<bool>("Arnes5Posiciones")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("BotasSeguridad")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CascoSeguridadBarbiquejo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ciudad")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Comentario")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ComentariosStatusArnes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CuerdaPosicionamiento")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("FechaFabricacionArnes")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("FechaFabricacionCuerda")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("FechaFabricacionShock")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Gerencia")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Guantes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Imagen1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Imagen2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImagenFirma")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("JefeDirecto")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LentesSeguridad")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MarcaArnes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Mosqueton")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NombreUsuario")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShockAbsorbente")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SujetadorLineaVida")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PkEPPTorres");
+
+                    b.ToTable("EPPTorres");
+                });
 
             modelBuilder.Entity("PowerAppsAplication.Models.Equipos", b =>
                 {
@@ -56,13 +135,13 @@ namespace PowerAppsAplication.Migrations
                     b.Property<string>("PeriodoCalibracion")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("ProximaCalibracion")
+                    b.Property<DateTime>("ProximaCalibracion")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Responsable")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("UltimaCalibracion")
+                    b.Property<DateTime>("UltimaCalibracion")
                         .HasColumnType("datetime2");
 
                     b.HasKey("PkEquipo");
@@ -87,14 +166,14 @@ namespace PowerAppsAplication.Migrations
                     b.Property<DateTime>("FechaMantenimiento")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal?>("FechaReparacion")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<DateTime>("FechaReparacion")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("FkEquipo")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("MontoGastado")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("MontoGastado")
+                        .HasColumnType("int");
 
                     b.Property<string>("Motivo")
                         .HasColumnType("nvarchar(max)");

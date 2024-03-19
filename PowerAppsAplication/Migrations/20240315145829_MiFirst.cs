@@ -5,10 +5,44 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PowerAppsAplication.Migrations
 {
-    public partial class firstM : Migration
+    public partial class MiFirst : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "EPPTorres",
+                columns: table => new
+                {
+                    PkEPPTorres = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NombreUsuario = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    JefeDirecto = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Gerencia = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Ciudad = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Arnes5Posiciones = table.Column<bool>(type: "bit", nullable: false),
+                    MarcaArnes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FechaFabricacionArnes = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ComentariosStatusArnes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BotasSeguridad = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CuerdaPosicionamiento = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FechaFabricacionCuerda = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Guantes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LentesSeguridad = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Mosqueton = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ShockAbsorbente = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FechaFabricacionShock = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SujetadorLineaVida = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CascoSeguridadBarbiquejo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Comentario = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Imagen1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Imagen2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImagenFirma = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EPPTorres", x => x.PkEPPTorres);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Equipos",
                 columns: table => new
@@ -23,8 +57,8 @@ namespace PowerAppsAplication.Migrations
                     Responsable = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Estado = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PeriodoCalibracion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UltimaCalibracion = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    ProximaCalibracion = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UltimaCalibracion = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ProximaCalibracion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Departamento = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -43,8 +77,8 @@ namespace PowerAppsAplication.Migrations
                     Motivo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Calibracion = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Reparacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FechaReparacion = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    MontoGastado = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    FechaReparacion = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    MontoGastado = table.Column<int>(type: "int", nullable: false),
                     EquiposPkEquipo = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -65,6 +99,9 @@ namespace PowerAppsAplication.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "EPPTorres");
+
             migrationBuilder.DropTable(
                 name: "HistoricoEquipos");
 

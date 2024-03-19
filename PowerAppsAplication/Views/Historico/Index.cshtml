@@ -1,0 +1,226 @@
+﻿@model IEnumerable<PowerAppsAplication.Models.HistoricoEquipos>
+
+<style>
+    /* Ajusta la columna "Nombre" de la tabla en caso de que contenga un registro con cadena extensa, evita que se rompa el diseño responsivo*/
+    .tdAjustado {
+        max-width: 100px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    /* Indica que se muestre la "mano" cuando el cursor pase sobre los elementos del tipo <a>*/
+    a {
+        cursor: pointer;
+    }
+
+    /* Estilo para hacer la tabla más compacta */
+    .table-sm th, .table-sm td {
+        padding: 0.2rem;
+        font-size: 0.7rem;
+    }
+
+    /* Ajuste de tamaño de las acciones */
+    .acciones {
+        width: 100px;
+    }
+
+    /* Contenedor flotante blanco */
+    .floating-container {
+        background-color: white;
+        box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        border-radius: 10px;
+        position: relative;
+    }
+
+    /* Línea separadora */
+    .line-separator {
+        border-top: 1px solid #ccc;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+
+    /* Estilo para el input de búsqueda */
+    .search-input {
+        border-radius: 5px;
+    }
+
+    /* Estilo para los botones de exportación */
+    .btn-export {
+        border-radius: 5px;
+        padding: 8px 16px;
+        font-size: 14px;
+        margin-right: 10px;
+    }
+
+    /* Estilo para el botón "Nuevo Equipo" */
+    .btn-nuevo-equipo {
+        border-radius: 5px;
+        padding: 8px 16px;
+        font-size: 14px;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="floating-container" style="Margin-bottom: 10px">
+                <h2 class="mb-4">Mantenimiento del equipo</h2>
+                <a asp-action="Crear" asp-controller="Historico" asp-route-id=@ViewBag.Id class="btn btn-success btn-nuevo-equipo">
+                    <i class="bi bi-plus"></i> Registrar mantenimiento
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="floating-container">
+
+                <div class="row align-items-center">
+                    <div class="col-md-6 mb-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control search-input" placeholder="Buscar..." aria-label="Buscar" aria-describedby="button-addon2" id="searchInput">
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3 text-right">
+                        <button class="btn btn-primary btn-export" onclick="exportTableToPDF()">
+                            Exportar a PDF
+                        </button>
+                        <button class="btn btn-success btn-export" onclick="exportTableToExcel()">
+                            Exportar a Excel
+                        </button>
+                        <button class="btn btn-info btn-export" onclick="exportTableToXML()">
+                            Exportar a XML
+                        </button>
+                    </div>
+                </div>
+
+                <div class="line-separator"></div>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-sm" id="equiposTable">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th class="text-center">Fecha de mantenimiento</th>
+                                <th class="text-center">Motivo</th>
+                                <th class="text-center">Calibracion</th>
+                                <th class="text-center">Reparacion</th>
+                                <th class="text-center">Fecha de la reparacion</th>
+                                <th class="text-center">Monto gastado</th>
+                                <th class="text-center acciones">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                    <tr>
+                                        <td class="align-middle">@item.FechaMantenimiento.ToShortDateString()</td>
+                                        <td class="align-middle">@item.Motivo</td>
+                                        <td class="align-middle">@item.Calibracion</td>
+                                        <td class="align-middle">@item.Reparacion</td>
+                                        <td class="align-middle">@item.FechaReparacion.ToShortDateString()</td>
+                                        <td class="align-middle">@item.MontoGastado</td>
+
+                                        <td class="align-middle acciones">
+                                            <div class="btn-group" role="group" aria-label="Acciones">
+                                               @* <a class="btn btn-warning btn-sm"asp-action="Index" asp-controller="Historico" asp-route-id="@item.PKHistoricoEquipos" role="button">
+                                                    <i class="bi bi-journal"></i> Historial
+                                                </a>*@
+                                                <a class="btn btn-warning btn-sm" href="#" role="button">
+                                                    <i class="bi bi-pencil"></i> Editar
+                                                </a>
+                                                <a class="btn btn-danger btn-sm" role="button" onclick="eliminar(@item.PKHistoricoEquipos)">
+                                                    <i class="bi bi-trash"></i> Eliminar
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    @if (Model.Count() == 0)
+                    {
+                            <div class="text-center">
+                                <p>No hay registros</p>
+                            </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+        <!-- Incluir jQuery primero -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <script>
+            $(document).ready(function () {
+                $('#searchInput').on('keyup', function () {
+                    var value = $(this).val().toLowerCase();
+                    $('#equiposTable tbody tr').filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                });
+            });
+                    function eliminar(id) {
+            Swal.fire({
+                title: '¿Desea eliminar el registro?',
+                text: "Esta acción no se podrá revertir",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var form = $('#__AjaxAntiForgeryForm');
+                    var token = $('input[name="__RequestVerificationToken"]', form).val();
+                    $.ajax({
+                        url: '@Url.Action("Eliminar", "Historico")',
+                        type: 'POST',
+                        data: {
+                            __RequestVerificationToken: token,
+                            id: id
+                        },
+                        success: function (data) {
+                            if (data.success) {
+                                Swal.fire({
+                                    title: 'Eliminado',
+                                    text: data.message,
+                                    icon: 'success',
+                                    timer: 2000,
+                                    showConfirmButton: false
+                                }).then(function () {
+                                    location.reload();
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: data.message,
+                                    icon: 'error'
+                                });
+                            }
+                        },
+                        error: function () {
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Ha ocurrido un error al eliminar el registro',
+                                icon: 'error'
+                            });
+                        }
+                    });
+                }
+            });
+        }
+
+
+        </script>
+}
