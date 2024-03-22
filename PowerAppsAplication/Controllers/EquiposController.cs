@@ -42,6 +42,8 @@ namespace PowerAppsAplication.Controllers
             {
                 Equipos equipo = new()
                 {
+                    Region = requestEquipos.Region,
+                    Ciudad = requestEquipos.Ciudad,
                     Marca = requestEquipos.Marca,
                     Modelo = requestEquipos.Modelo,
                     NoSerie = requestEquipos.NoSerie,
@@ -51,8 +53,9 @@ namespace PowerAppsAplication.Controllers
                     PeriodoCalibracion = requestEquipos.PeriodoCalibracion,
                     UltimaCalibracion = requestEquipos.UltimaCalibracion,
                     ProximaCalibracion = requestEquipos.ProximaCalibracion,
+                    UltimoMantenimiento = requestEquipos.UltimoMantenimiento,
+                    ProximaMantenimiento = requestEquipos.ProximaMantenimiento,
                     Departamento = requestEquipos.Departamento,
-                    LugarAsignado = requestEquipos.LugarAsignado
                 };
                 _context.Equipos.Add(equipo);
                 await _context.SaveChangesAsync();
@@ -89,6 +92,8 @@ namespace PowerAppsAplication.Controllers
                 Equipos equipo = new();
 
                 equipo = _context.Equipos.Find(id);
+                equipo.Region = requestEquipos.Region;
+                equipo.Ciudad= requestEquipos.Ciudad;
                 equipo.Marca = requestEquipos.Marca;
                 equipo.Modelo = requestEquipos.Modelo;
                 equipo.NoSerie = requestEquipos.NoSerie;
@@ -98,8 +103,9 @@ namespace PowerAppsAplication.Controllers
                 equipo.PeriodoCalibracion = requestEquipos.PeriodoCalibracion;
                 equipo.UltimaCalibracion = requestEquipos.UltimaCalibracion;
                 equipo.ProximaCalibracion = requestEquipos.ProximaCalibracion;
+                equipo.UltimoMantenimiento = requestEquipos.UltimoMantenimiento;
+                equipo.ProximaMantenimiento = requestEquipos.ProximaMantenimiento;
                 equipo.Departamento = requestEquipos.Departamento;
-                equipo.LugarAsignado = requestEquipos.LugarAsignado;
 
                 _context.Equipos.Update(equipo);
                 await _context.SaveChangesAsync();

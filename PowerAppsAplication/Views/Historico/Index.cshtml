@@ -76,6 +76,7 @@
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-md-12">
             <div class="floating-container">
@@ -105,11 +106,12 @@
                     <table class="table table-bordered table-sm" id="equiposTable">
                         <thead class="thead-dark">
                             <tr>
-                                <th class="text-center">Fecha de mantenimiento</th>
                                 <th class="text-center">Motivo</th>
-                                <th class="text-center">Calibracion</th>
-                                <th class="text-center">Reparacion</th>
-                                <th class="text-center">Fecha de la reparacion</th>
+                                <th class="text-center">Fecha de mantenimiento</th>
+                                <th class="text-center">Descripción</th>
+                                <th class="text-center">Comentarios</th>
+                                <th class="text-center">Certificado de calibracion</th>
+                                <th class="text-center">Foto del equipo</th>
                                 <th class="text-center">Monto gastado</th>
                                 <th class="text-center acciones">Acciones</th>
                             </tr>
@@ -118,12 +120,13 @@
                             @foreach (var item in Model)
                             {
                                     <tr>
-                                        <td class="align-middle">@item.FechaMantenimiento.ToShortDateString()</td>
                                         <td class="align-middle">@item.Motivo</td>
-                                        <td class="align-middle">@item.Calibracion</td>
-                                        <td class="align-middle">@item.Reparacion</td>
-                                        <td class="align-middle">@item.FechaReparacion.ToShortDateString()</td>
-                                        <td class="align-middle">@item.MontoGastado</td>
+                                        <td class="align-middle">@item.Fecha.ToShortDateString()</td>
+                                        <td class="align-middle">@item.Descripcion</td>
+                                        <td class="align-middle">@item.Comentarios</td>
+                                        <td class="align-middle">@item.CertificadoCalibracion</td>
+                                        <td class="align-middle">@item.FotoEquipo</td>
+                                        <td class="align-middle">$@item.MontoGastado</td>
 
                                         <td class="align-middle acciones">
                                             <div class="btn-group" role="group" aria-label="Acciones">
@@ -142,6 +145,7 @@
                             }
                         </tbody>
                     </table>
+                    <h6>Total del gasto invertido en el equipo: $ @(Model.Sum(item => item.MontoGastado))</h6>
 
                     @if (Model.Count() == 0)
                     {
@@ -153,6 +157,52 @@
             </div>
         </div>
     </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="floating-container">
+                <h4>Calibraciones</h4>
+                <table class="table table-bordered table-sm">
+                    <thead>
+                        <tr>
+                            <th>Total de Calibraciones</th>
+                            <th>Total Gastado en calibraciones</th>
+                            <th>Promedio de gastos por calibración</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>$@(Model.Where(item => item.Motivo == "Calibracion").Count())</td>
+                            <td>$@(Model.Where(item => item.Motivo == "Calibracion").Sum(item => item.MontoGastado))</td>
+                            <td>$@(Model.Where(item => item.Motivo == "Calibracion").Average(item => item.MontoGastado))</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="floating-container">
+                <h4>Mantenimientos</h4>
+                <table class="table table-bordered table-sm">
+                    <thead>
+                        <tr>
+                            <th>Total de Mantenimientos</th>
+                            <th>Total Gastado en Mantenimientos</th>
+                            <th>Promedio por Mantenimiento</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>$@(Model.Where(item => item.Motivo == "Mantenimiento").Count())</td>
+                            <td>$@(Model.Where(item => item.Motivo == "Mantenimiento").Sum(item => item.MontoGastado))</td>
+                            <td>$@(Model.Where(item => item.Motivo == "Mantenimiento").Average(item => item.MontoGastado))</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 @section Scripts {

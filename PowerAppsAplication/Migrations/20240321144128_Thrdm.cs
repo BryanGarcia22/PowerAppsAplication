@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PowerAppsAplication.Migrations
 {
-    public partial class MiFirst : Migration
+    public partial class Thrdm : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -59,6 +59,8 @@ namespace PowerAppsAplication.Migrations
                     PeriodoCalibracion = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UltimaCalibracion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ProximaCalibracion = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UltimoMantenimiento = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ProximaMantenimiento = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Departamento = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -73,11 +75,12 @@ namespace PowerAppsAplication.Migrations
                     PKHistoricoEquipos = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FkEquipo = table.Column<int>(type: "int", nullable: false),
-                    FechaMantenimiento = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Motivo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Calibracion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Reparacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FechaReparacion = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Comentarios = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FotoEquipo = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    CertificadoCalibracion = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     MontoGastado = table.Column<int>(type: "int", nullable: false),
                     EquiposPkEquipo = table.Column<int>(type: "int", nullable: true)
                 },

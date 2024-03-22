@@ -12,8 +12,8 @@ using PowerAppsAplication.Context;
 namespace PowerAppsAplication.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240315145829_MiFirst")]
-    partial class MiFirst
+    [Migration("20240321144128_Thrdm")]
+    partial class Thrdm
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -138,10 +138,16 @@ namespace PowerAppsAplication.Migrations
                     b.Property<DateTime>("ProximaCalibracion")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("ProximaMantenimiento")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Responsable")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UltimaCalibracion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("UltimoMantenimiento")
                         .HasColumnType("datetime2");
 
                     b.HasKey("PkEquipo");
@@ -157,28 +163,31 @@ namespace PowerAppsAplication.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PKHistoricoEquipos"), 1L, 1);
 
-                    b.Property<string>("Calibracion")
+                    b.Property<byte[]>("CertificadoCalibracion")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("Comentarios")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Descripcion")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("EquiposPkEquipo")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("FechaMantenimiento")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("FechaReparacion")
+                    b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("FkEquipo")
                         .HasColumnType("int");
 
+                    b.Property<byte[]>("FotoEquipo")
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<int>("MontoGastado")
                         .HasColumnType("int");
 
                     b.Property<string>("Motivo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Reparacion")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PKHistoricoEquipos");

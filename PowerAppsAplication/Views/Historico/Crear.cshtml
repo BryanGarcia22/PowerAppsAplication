@@ -47,24 +47,27 @@
                         <input asp-for="FkEquipo" type="hidden" class="form-control" value="@ViewBag.Id";
 />
                     <div class="form-group">
-                        <label asp-for="FechaMantenimiento" class="control-label">Fecha de Mantenimiento:</label>
-                        <input asp-for="FechaMantenimiento" class="form-control" type="date" />
-                    </div>
-                    <div class="form-group">
                         <label asp-for="Motivo" class="control-label">Motivo:</label>
                         <input asp-for="Motivo" class="form-control" />
+                    </div><div class="form-group">
+                        <label asp-for="Fecha" class="control-label">Fecha:</label>
+                        <input asp-for="Fecha" class="form-control" type="date" />
                     </div>
                     <div class="form-group">
-                        <label asp-for="Calibracion" class="control-label">Calibración:</label>
-                        <input asp-for="Calibracion" class="form-control" />
+                        <label asp-for="Descripcion" class="control-label">Descripcion:</label>
+                        <input asp-for="Descripcion" class="form-control" />
                     </div>
                     <div class="form-group">
-                        <label asp-for="Reparacion" class="control-label">Reparación:</label>
-                        <input asp-for="Reparacion" class="form-control" />
+                        <label asp-for="Comentarios" class="control-label">Comentarios:</label>
+                        <input asp-for="Comentarios" class="form-control" />
                     </div>
                     <div class="form-group">
-                        <label asp-for="FechaReparacion" class="control-label">Fecha de Reparación:</label>
-                        <input asp-for="FechaReparacion" class="form-control" type="date" />
+                        <label asp-for="FotoEquipo" class="control-label">Foto del equipo:</label>
+                        <input asp-for="FotoEquipo" class="form-control" type="date" />
+                    </div> 
+                    <div class="form-group">
+                        <label asp-for="CertificadoCalibracion" class="control-label">Certificado de calibracion:</label>
+                        <input asp-for="CertificadoCalibracion" class="form-control" type="date" />
                     </div>
                     <div class="form-group">
                         <label asp-for="MontoGastado" class="control-label">Monto Gastado:</label>

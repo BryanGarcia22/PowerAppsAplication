@@ -66,6 +66,21 @@
         top: 20px;
         right: 20px;
     }
+    /* Color verde para fechas más de 2 meses en el futuro */
+    .table-sm .fecha-verde {
+        background-color: lawngreen;
+    }
+
+    /* Color amarillo para fechas dentro de los próximos 2 meses */
+    .table-sm .fecha-amarillo {
+        background-color: yellow;
+    }
+
+    /* Color rojo para fechas que ya han pasado */
+    .table-sm .fecha-rojo {
+        background-color: orangered;
+    }
+
 </style>
 
 @if (TempData["Success"] != null)
@@ -121,17 +136,20 @@
                     <table class="table table-bordered table-sm" id="equiposTable">
                         <thead class="thead-dark">
                             <tr>
+                                <th class="text-center">Region</th>
+                                <th class="text-center">Ciudad</th>
+                                <th class="text-center">Departamento</th>
                                 <th class="text-center">Marca</th>
                                 <th class="text-center">Modelo</th>
                                 <th class="text-center">No. Serie</th>
                                 <th class="text-center">Descripción</th>
-                                <th class="text-center">Lugar Asignado</th>
                                 <th class="text-center">Responsable</th>
                                 <th class="text-center">Estado</th>
                                 <th class="text-center">Periodo de Calibración</th>
                                 <th class="text-center">Última Calibración</th>
                                 <th class="text-center">Próxima Calibración</th>
-                                <th class="text-center">Departamento</th>
+                                <th class="text-center">Último mantenimiento</th>
+                                <th class="text-center">Próximo mantenimiento</th>
                                 <th class="text-center acciones">Acciones</th>
                             </tr>
                         </thead>
@@ -139,17 +157,20 @@
                             @foreach (var item in Model)
                             {
                                 <tr>
+                                    <td class="align-middle">@item.Region</td>
+                                    <td class="align-middle">@item.Ciudad</td>
+                                    <td class="align-middle">@item.Departamento</td>
                                     <td class="align-middle">@item.Marca</td>
                                     <td class="align-middle">@item.Modelo</td>
                                     <td class="align-middle">@item.NoSerie</td>
                                     <td class="align-middle">@item.Descripcion</td>
-                                    <td class="align-middle">@item.LugarAsignado</td>
                                     <td class="align-middle">@item.Responsable</td>
                                     <td class="align-middle">@item.Estado</td>
-                                    <td class="align-middle">@item.PeriodoCalibracion</td>
+                                    <td class="align-middle">@item.PeriodoCalibracion mes/es</td>
                                     <td class="align-middle">@item.UltimaCalibracion.ToShortDateString()</td>
                                     <td class="align-middle">@item.ProximaCalibracion.ToShortDateString()</td>
-                                    <td class="align-middle">@item.Departamento</td>
+                                    <td class="align-middle">@item.UltimoMantenimiento.ToShortDateString()</td>
+                                    <td class="align-middle">@item.ProximaMantenimiento.ToShortDateString()</td>
                                     <td class="align-middle acciones">
                                         <div class="btn-group" role="group" aria-label="Acciones">
                                             <a class="btn btn-warning btn-sm"asp-action="Index" asp-controller="Historico" asp-route-id="@item.PkEquipo" role="button">
@@ -186,6 +207,61 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
+
+        $(document).ready(function () {
+            $('#equiposTable tbody tr').each(function () {
+                var proximaCalibracionCell = $(this).find('td:eq(11)');
+                console.log(proximaCalibracionCell.text());
+                var proximaCalibracion = proximaCalibracionCell.text().trim();
+
+                if (proximaCalibracion !== '') {
+                    // Parsear la fecha en formato dd/mm/yyyy a un objeto de fecha
+                    var parts = proximaCalibracion.split('/');
+                    var fechaProximaCalibracion = new Date(parts[2], parts[1] - 1, parts[0]);
+                    var hoy = new Date();
+
+                    var diffDias = Math.ceil((fechaProximaCalibracion - hoy) / (1000 * 60 * 60 * 24));
+
+                    if (diffDias > 60) {
+                        proximaCalibracionCell.addClass('fecha-verde', true);
+
+                    } else if (diffDias <= 60 && diffDias > 0) {
+                        proximaCalibracionCell.addClass('fecha-amarillo', true);
+
+                    } else {
+                        proximaCalibracionCell.addClass('fecha-rojo', true);
+
+                    }
+                }
+            });
+        });
+
+        $(document).ready(function () {
+            $('#equiposTable tbody tr').each(function () {
+                var proximaMantenimientoCell = $(this).find('td:eq(13)');
+                var proximaMantenimiento = proximaMantenimientoCell.text().trim();
+
+                if (proximaMantenimiento !== '') {
+                    // Parsear la fecha en formato dd/mm/yyyy a un objeto de fecha
+                    var parts = proximaMantenimiento.split('/');
+                    var fechaproximaMantenimiento = new Date(parts[2], parts[1] - 1, parts[0]);
+                    var hoy = new Date();
+
+                    var diffDias = Math.ceil((fechaproximaMantenimiento - hoy) / (1000 * 60 * 60 * 24));
+
+                    if (diffDias > 60) {
+                        proximaMantenimientoCell.addClass('fecha-verde', true);
+
+                    } else if (diffDias <= 60 && diffDias > 0) {
+                        proximaMantenimientoCell.addClass('fecha-amarillo', true);
+
+                    } else {
+                        proximaMantenimientoCell.addClass('fecha-rojo', true);
+
+                    }
+                }
+            });
+        });
         $(document).ready(function () {
             $('#searchInput').on('keyup', function () {
                 var value = $(this).val().toLowerCase();

@@ -10,8 +10,8 @@
     .floating-container {
         background-color: white;
         box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        width: 100%;
+        padding: 10px;
+        width: 150%;
         border-radius: 10px;
         position: relative;
     }
@@ -34,17 +34,52 @@
     /* Estilo para el título */
     .titulo {
         text-align: center;
-        margin-bottom: 20px;
+        margin-bottom: 17px;
     }
 </style>
 
 <div class="container">
     <h1 class="titulo">Formulario de Equipo</h1>
 
-    <div class="row justify-content-center">
+    <div class="row ">
         <div class="col-md-8">
             <div class="floating-container">
                 <form asp-action="Crear" asp-controller="Equipos" method="post">
+                    <div class="form-group row">
+                        <div class="col">
+                            <label asp-for="Region" class="control-label">Region:</label>
+                            <select asp-for="Region" id="regionSelect" class="form-control">
+                                <option value="Sur">Sur</option>
+                                <option value="Norte">Norte</option>
+                                <option value="Occidente">Occidente</option>
+                                <option value="Centro">Centro</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label asp-for="Ciudad" class="control-label">Ciudad:</label>
+                            <select asp-for="Ciudad" id="ciudadSelect" class="form-control">
+                                <!-- Opciones de ciudad se llenarán dinámicamente -->
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label asp-for="Departamento" class="control-label">Departamento:</label>
+                            <select asp-for="Departamento" id="regionSelect" class="form-control">
+                                <option value="MIR">MIR</option>
+                                <option value="ISC">ISC</option>
+                                <option value="IngRed">Ingenieria de red</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label asp-for="Responsable" class="control-label">Responsable:</label>
+                            <input asp-for="Responsable" class="form-control" />
+                        </div>
+                        <div class="col">
+                            <label asp-for="Estado" class="control-label">Estado del equipo:</label>
+                            <input asp-for="Estado" class="form-control" />
+                        </div>
+                    </div>
                     <div class="form-group row">
                         <div class="col">
                             <label asp-for="Marca" class="control-label">Marca:</label>
@@ -54,36 +89,21 @@
                             <label asp-for="NoSerie" class="control-label">Número de Serie:</label>
                             <input asp-for="NoSerie" class="form-control" />
                         </div>
+                        <div class="col">
+                            <label asp-for="Modelo" class="control-label">Modelo:</label>
+                            <input asp-for="Modelo" class="form-control" />
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="Modelo" class="control-label">Modelo:</label>
-                        <input asp-for="Modelo" class="form-control" />
-                    </div>
+                    
                     <div class="form-group">
                         <label asp-for="Descripcion" class="control-label">Descripción:</label>
                         <textarea asp-for="Descripcion" class="form-control" rows="3"></textarea>
                     </div>
                     <div class="form-group row">
                         <div class="col">
-                            <label asp-for="LugarAsignado" class="control-label">Lugar Asignado:</label>
-                            <input asp-for="LugarAsignado" class="form-control" />
-                        </div>
-                        <div class="col">
-                            <label asp-for="Responsable" class="control-label">Responsable:</label>
-                            <input asp-for="Responsable" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col">
-                            <label asp-for="Estado" class="control-label">Estado:</label>
-                            <input asp-for="Estado" class="form-control" />
-                        </div>
-                        <div class="col">
                             <label asp-for="PeriodoCalibracion" class="control-label">Periodo de Calibración (meses):</label>
                             <input asp-for="PeriodoCalibracion" class="form-control" />
                         </div>
-                    </div>
-                    <div class="form-group row">
                         <div class="col">
                             <label asp-for="UltimaCalibracion" class="control-label">Última Calibración:</label>
                             <input asp-for="UltimaCalibracion" class="form-control" type="date" />
@@ -93,18 +113,25 @@
                             <input asp-for="ProximaCalibracion" class="form-control" type="date" readonly />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="Departamento" class="control-label">Departamento:</label>
-                        <input asp-for="Departamento" class="form-control" />
+                    <div class="form-group row">
+                        <div class="col">
+                            <label asp-for="UltimoMantenimiento" class="control-label">Último Mantenimiento:</label>
+                            <input asp-for="UltimoMantenimiento" class="form-control" type="date" />
+                        </div>
+                        <div class="col">
+                            <label asp-for="ProximaMantenimiento" class="control-label">Próximo Mantenimiento:</label>
+                            <input asp-for="ProximaMantenimiento" class="form-control" type="date" />
+                        </div>
                     </div>
                     <div class="row justify-content-between">
                         <div>
-                            <button type="submit" class="btn btn-primary btn-guardar">
-                                <i class="la la-check"></i> Guardar
-                            </button>
+                            
                             <a asp-controller="Equipos" asp-action="Index" class="btn btn-secondary btn-regresar">
                                 <i class="la la-arrow-left"></i> Regresar
                             </a>
+                            <button type="submit" class="btn btn-success btn-guardar">
+                                <i class="la la-check"></i> Guardar
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -115,6 +142,34 @@
 
 @section Scripts {
     <script>
+        const opcionesCiudad = {
+            Sur: ["ACA", "CAM", "CAN", "CAR", "CUE", "MER", "PAC", "POZ", "PUE", "TOL", "VER", "VLD", "VIL", "XAL"],
+            Norte: ["CDJ", "CHI", "COA", "DUR", "GON", "MAT", "MTY", "NLD", "REY", "SAL", "TAM", "TOR"],
+            Occidente: ["AGS", "CDV", "CEL", "CUL", "GDL", "HER", "IRA", "LEO", "MAZ", "MOR", "MXI", "QRO", "SJR", "SLP", "TIJ", "ZAC"],
+            Centro: ["MEX"]
+        };
+
+        // Función para actualizar las opciones de Ciudad
+        function actualizarCiudades() {
+            const regionSelect = document.getElementById("regionSelect");
+            const ciudadSelect = document.getElementById("ciudadSelect");
+            const selectedRegion = regionSelect.value;
+            ciudadSelect.innerHTML = "";
+            const ciudades = opcionesCiudad[selectedRegion];
+
+            ciudades.forEach(ciudad => {
+                const option = document.createElement("option");
+                option.text = ciudad;
+                option.value = ciudad;
+                ciudadSelect.appendChild(option);
+            });
+        }
+        actualizarCiudades();
+
+        // Agregar un evento change al select de Región para actualizar las ciudades cuando cambie
+        document.getElementById("regionSelect").addEventListener("change", actualizarCiudades);
+
+
         $(function () {
             $('#UltimaCalibracion, #PeriodoCalibracion').change(function () {
                 var ultimaCalibracion = new Date($('#UltimaCalibracion').val());
